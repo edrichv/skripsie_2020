@@ -1,0 +1,14 @@
+*.txt
+*.exe
+*.py
+*.cir
+*.json
+*.csv
+/files
+/.ipynb_checkpoints
+*.sln
+*.vcxproj
+*.filters
+*.user
+/x64
+/Debug

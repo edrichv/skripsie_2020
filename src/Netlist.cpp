@@ -116,14 +116,25 @@ void Netlist::trim_spaces(std::string& line) {
 void Netlist::to_upper_case(std::string& line) {
 	std::transform(line.begin(), line.end(), line.begin(), ::toupper);
 }
-std::string Netlist::get_print_statement(std::string node) {
+std::string Netlist::get_print_statement(std::string node, char analysis) {
 	std::string ps = ".PRINT ";
-	if (subckt_to_main.find(node) != subckt_to_main.end()) { //exists in map
-		ps += "NODEP " + subckt_to_main.at(node);
+	if (analysis == 0) {
+		if (subckt_to_main.find(node) != subckt_to_main.end()) { //exists in map
+			ps += "NODEV " + subckt_to_main.at(node);
+		}
+		else {
+			ps += "V(" + node + "." + "X" + dutname + ")";
+		}
 	}
 	else {
-		ps += "P(" + node + "." + "X" + dutname + ")";
+		if (subckt_to_main.find(node) != subckt_to_main.end()) { //exists in map
+			ps += "NODEP " + subckt_to_main.at(node);
+		}
+		else {
+			ps += "P(" + node + "." + "X" + dutname + ")";
+		}
 	}
+	
 	return ps;
 }
 std::unordered_map<std::string, std::string> Netlist::gets2m() {

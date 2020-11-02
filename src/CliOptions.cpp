@@ -1,19 +1,17 @@
 #include "../include/CliOptions.h"
 
 CliOptions::CliOptions(int argc, char** argv) {
-	CliOptions::convention = (char*)"0";
 	bool gotTPPath = false;
 	for (int i = 1; i < argc; i++) {
 		if (argv[i][0] == '-') {
 			switch (argv[i][1]) {
-			case 'c':
-				CliOptions::convention = argv[++i];
-				break;
 			case 'v':
-				CliOptions::verbose = true;
+				CliOptions::verbosity = atoi(argv[++i]);
+				if (CliOptions::verbosity < 0) CliOptions::verbosity = 0;
+				if (CliOptions::verbosity > 2) CliOptions::verbosity = 2;
 				break;
-			case 'r':
-				CliOptions::remove_after = false;
+			case 'a':
+				CliOptions::analysis = atoi(argv[++i]);
 			default:
 				break;
 			}

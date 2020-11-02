@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
     netlist_out = Netlist(netlist_in.get_lines());
 
     for (std::string node : netlist_in.get_noi()) {
-        netlist_out.add_line(netlist_in.get_print_statement(node));
+        netlist_out.add_line(netlist_in.get_print_statement(node, cliOptions.analysis));
     }
     std::string out_path = cliOptions.inputNetlistPath;
     out_path.insert(out_path.find("."), "_gen");
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
             std::cout << input << " ";
         }
         std::cout << std::endl << std::endl;
-        processing.run_josim();
+        processing.run_josim(cliOptions);
         lt.simulate(tp[i],processing.get_tp_nodes());
 
         printf("%-8s%-3s%-6s%-11s", "NODE", "LT", "JOSIM", "EVENT (ps)");
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
         int cnts[2] = {0};
         
         for (int j = 2; j < processing.get_data_length(); j++) {
-            std::vector<int> pulses = processing.phase_pulse_detect(j);
+            std::vector<int> pulses = processing.pulse_detect(j, cliOptions);
             int size = pulses.size();
             int josim_node_state = size;
             int node_val = int(lt.get_node_val(noi[j - 1]));
@@ -91,7 +91,7 @@ int main(int argc, char** argv) {
                     }
                 }
             }
-            bool should_write = !(passed && !cliOptions.verbose);
+            bool should_write = !(passed && cliOptions.verbosity == 0);
             if (should_write) {
                 if (size > 0){
                     printf("%-8s%-3d%-6d%-11.2f%", noi[j - 1].c_str(), node_val, size, pulse_event);
@@ -103,7 +103,7 @@ int main(int argc, char** argv) {
             if (!passed) {
                 std::cout << "FAIL";
             }
-            else if (cliOptions.verbose) {
+            else if (cliOptions.verbosity > 0) {
                 std::cout << "PASS";
             }
             if (lt.contains(lt.get_stop_nodes(), noi[j - 1]) && should_write) {
@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    if (cliOptions.remove_after) {
+    if (cliOptions.verbosity < 2) {
         for (std::string path : files_to_remove) {
             std::filesystem::remove(path);
         }

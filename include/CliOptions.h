@@ -8,10 +8,9 @@ private:
 public:
 	CliOptions(int argc, char** argv);
 	char* inputNetlistPath = (char*)".";
-	char* convention = (char*)"0";
 	char* testPatternPath = (char*)".";
-	bool verbose = false;
-	bool remove_after = true;
+	char verbosity = 0;
+	char analysis = 1;
 };
 
 #endif

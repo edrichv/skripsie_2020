@@ -32,7 +32,7 @@ public:
 	void reformat_line(std::string& line);
 	void trim_spaces(std::string& line);
 	void to_upper_case(std::string& line);
-	std::string get_print_statement(std::string node);
+	std::string get_print_statement(std::string node, char analysis);
 	std::unordered_map<std::string, std::string> gets2m();
 	std::vector<std::string> get_noi();
 	void add_line(std::string line);

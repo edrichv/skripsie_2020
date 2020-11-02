@@ -26,6 +26,7 @@ private:
 	double trans_analysis_time = 1e-9;
 	double input_delay = 25e-12;
 	double wavefile_timestep = 5e-12;
+	double phase_ratio = 0.5;
 	std::string high_amplitude = "600";
 	double integrator_width = pulse_width;
 	std::vector<std::vector<float>> data;
@@ -41,13 +42,13 @@ public:
 	std::vector<std::vector<int>> get_test_pattern();
 	Processing(double fr, double p0, int res_tol, double pw, double mod);
 	Processing(std::string param_path);
-	std::vector<int> pulse_detect(int signal_index);
+	std::vector<int> pulse_detect(int signal_index, CliOptions& cliOptions);
 	void printInputWaves(std::vector<std::vector<int>> test_pattern, int num_tests);
 	std::vector<std::vector<float>> transpose(std::vector<std::vector<float>> a);
 	void process_params(CliOptions cli_options);
 	int get_data_length();
 	float getTimeStep();
-	void run_josim();
+	void run_josim(CliOptions& cliOptions);
 	std::vector<std::vector<float>> csv2matrix(std::string file_path);
 	std::vector<std::string> get_tp_nodes();
 	int get_clock_window(float pulse_event);

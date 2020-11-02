@@ -24,6 +24,7 @@ Processing::Processing(std::string param_path) {
     input_delay = d["input_delay"].GetDouble();
     wavefile_timestep = d["wavefile_timestep"].GetDouble();
     high_amplitude = d["high_amplitude"].GetString();
+    phase_ratio = d["phase_ratio"].GetDouble();
 }
 
 std::vector<std::vector<int>> Processing::get_test_pattern() {
@@ -71,11 +72,14 @@ std::vector<int> Processing::phase_pulse_detect(int signal_index) {
     //float time = data[0][1] - data[0][0];
     std::vector<int> pulses;
 
-    float next_pulse = 2 * pi;
+    double two_pi = 2 * (double)pi;
+    int psize = 0;
+    double threshold = phase_ratio * two_pi;
+    
     for (int i = 0; i < signal.size(); i++) {
-        if (signal[i] >= next_pulse) {
+        if (signal[i] >= psize * two_pi + threshold) {
             pulses.push_back(i);
-            next_pulse += 2 * pi;
+            psize++;
         }
     }
     
@@ -86,7 +90,8 @@ void Processing::set_cw_for_node(std::string node, float pulse_event) {
     cw_delay.insert_or_assign(node, get_clock_window(pulse_event));
 }
 
-std::vector<int> Processing::pulse_detect(int signal_index) {
+std::vector<int> Processing::pulse_detect(int signal_index, CliOptions& cliOptions) {
+    if (cliOptions.analysis == 1) return phase_pulse_detect(signal_index);
     std::vector<int> detect;
     std::vector<float> signal = data[signal_index];
     float time = data[0][1] - data[0][0];
@@ -164,9 +169,12 @@ void Processing::process_params(CliOptions cli_options) {
         }
         std::cout << std::endl;
     }*/
-
-    josimCommand = "josim -a 1 -o data.csv -c ";
-    josimCommand.append(cli_options.convention);
+    if (cli_options.analysis == 0) {
+        josimCommand = "josim -a 0 -o data.csv ";
+    }
+    else {
+        josimCommand = "josim -a 1 -o data.csv ";
+    }
     josimCommand.append(" ");
     std::string new_netlist = cli_options.inputNetlistPath;
     josimCommand += new_netlist.insert(new_netlist.find("."),"_gen");
@@ -176,13 +184,13 @@ int Processing::get_data_length() {
     return data.size();
 }
 
-void Processing::run_josim() {
+void Processing::run_josim(CliOptions& clioptions) {
     data.clear();
     std::cout << "Simulating circuit with JoSIM" << std::endl;
     system(josimCommand.c_str());
     std::cout << "Analyzing simulation results" << std::endl << std::endl;
     csv2matrix("data.csv");
-    clock_pulses = phase_pulse_detect(1);
+    clock_pulses = pulse_detect(1, clioptions);
 }
 
 std::vector<std::vector<float>> Processing::csv2matrix(std::string file_path) {
@@ -265,15 +273,15 @@ void Processing::printInputWaves(std::vector<std::vector<int>> test_pattern, int
     }
 }
 std::vector<std::vector<float>> Processing::transpose(std::vector<std::vector<float>> a) {
-    std::vector<std::vector<float>> t;
-    t.reserve(a.size());
-    for (int i = 0; i < a[0].size(); i++) {
-        std::vector<float> temp;
-        temp.reserve(a[0].size());
-        for (int j = 0; j < a.size(); j++) {
-            temp.push_back(a[j][i]);
+    int row_size = a[0].size();
+    int col_size = a.size(); 
+    std::vector<std::vector<float>> t(row_size);
+    std::vector<float> temp(col_size);
+    for (int i = 0; i < row_size; i++) {
+        for (int j = 0; j < col_size; j++) {
+            temp[j] = a[j][i];
         }
-        t.push_back(temp);
+        t[i] = temp;
     }
     return t;
 }

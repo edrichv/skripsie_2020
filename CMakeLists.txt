@@ -16,7 +16,11 @@ project(rsfq_analyze VERSION 0.1)
 # target_compile_features(rsfq_analyze PUBLIC cxx_std_17)
 
 set(SOURCES
-  src/*.cpp
+  src/CliOptions.cpp
+  src/LogicTree.cpp
+  src/Netlist.cpp
+  src/Processing.cpp
+  src/main.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

@@ -255,7 +255,7 @@ void Processing::printInputWaves(std::vector<std::vector<int>> test_pattern, int
             if (test_pattern[j][i]) high_times.push((int)((delay + j*clock_period) / time_step));
         }
         std::stringstream ss;
-        ss << "in" << i << ".txt";
+        ss << "IN" << i;
         output.open(ss.str());
         for (int k = 0; k < end; k++) {
             if (high_times.empty()) {

@@ -1,3 +1,4 @@
+.gitignore
 *.txt
 *.exe
 *.py
@@ -12,3 +13,4 @@
 *.user
 /x64
 /Debug
+/build

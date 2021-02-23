@@ -178,7 +178,7 @@ void Processing::process_params(CliOptions cli_options) {
     josimCommand.append(" ");
     std::string new_netlist = cli_options.inputNetlistPath;
     josimCommand += new_netlist.insert(new_netlist.find("."),"_gen");
-    josimCommand += " > nul";
+    josimCommand += " > josim_output.log";
 }
 int Processing::get_data_length() {
     return data.size();

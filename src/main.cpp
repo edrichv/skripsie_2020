@@ -94,10 +94,10 @@ int main(int argc, char** argv) {
             bool should_write = !(passed && cliOptions.verbosity == 0);
             if (should_write) {
                 if (size > 0){
-                    printf("%-8s%-3d%-6d%-11.2f%", noi[j - 1].c_str(), node_val, size, pulse_event);
+                    printf("%-8s%-3d%-6d%-11.2f", noi[j - 1].c_str(), node_val, size, pulse_event);
                 }
                 else {
-                    printf("%-8s%-3d%-6d%-11s%", noi[j - 1].c_str(), node_val, size, "NO PULSE");
+                    printf("%-8s%-3d%-6d%-11s", noi[j - 1].c_str(), node_val, size, "NO PULSE");
                 }
             }
             if (!passed) {

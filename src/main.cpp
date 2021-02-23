@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     files_to_remove.push_back("data.csv");
     for (int i = 0; i < tp[0].size(); i++) {
         std::stringstream ss;
-        ss << "in" << i << ".txt";
+        ss << "IN" << i;
         files_to_remove.push_back(ss.str());
     }
 

@@ -1,0 +1,28 @@
+{
+  "DUTparams": ["out","in","out","in","in","in","in","in","in","out","in","in","out","out","clk"],
+  "DUTname": "DUT",
+  "LSMITLL_AND2T": {
+    "type": "AND",
+    "params": [ "in", "in", "clk", "out" ]
+  },
+  "LSMITLL_OR2T": {
+    "type": "OR",
+    "params": [ "in", "in", "clk", "out" ]
+  },
+  "LSMITLL_XORT": {
+    "type": "XOR",
+    "params": [ "in", "in", "clk", "out" ]
+  },
+  "LSMITLL_DFFT": {
+    "type": "DFF",
+    "params": [ "in", "clk", "out" ]
+  },
+  "LSMITLL_SPLITT": {
+    "type": "SPLIT",
+    "params": [ "in", "out", "out" ]
+  },
+  "LSMITLL_NOTT": {
+    "type": "NOT",
+    "params": [ "in", "clk", "out" ]
+  }
+}

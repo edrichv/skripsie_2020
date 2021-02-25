@@ -1,0 +1,13 @@
+{
+    "flux_ratio":0.7,
+    "phi0":2.07e-15,
+    "resolve_tolerance": 6,
+    "pulse_width":25e-12,
+    "trans_analysis_time":800e-12,
+    "integrator_width": 10e-12,
+    "clock_period": 43e-12,
+    "input_delay": 50e-12,
+    "wavefile_timestep": 5e-12,
+    "high_amplitude": "600",
+    "phase_ratio": 0.5
+}

@@ -1,11 +1,15 @@
 /.vscode
 /data
+josim
 *.txt
 *.exe
 *.py
 *.cir
 *.json
 *.csv
+*.log
+*_gen.cir
+IN*
 /files
 /.ipynb_checkpoints
 *.sln

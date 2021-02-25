@@ -4,7 +4,11 @@ This repository serves the sole purpose of containing the source code of Edrich 
 
 ## Example usage
 In project root:
-`cd examples`
-`./run_good_ksa4.sh`
+```
+cd examples
+./run_good_ksa4.sh
+```
 or
-`./run_faulty_ksa4.sh`
+```
+./run_faulty_ksa4.sh
+```

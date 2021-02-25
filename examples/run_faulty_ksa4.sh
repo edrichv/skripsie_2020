@@ -1,3 +1,4 @@
+cd ..
 ./configure_release.sh
 cd build/Release
 make

@@ -210,7 +210,7 @@ std::vector<std::vector<float>> Processing::csv2matrix(std::string file_path) {
     for (char c : data_content) {
         if (parseable) {
             if (c == '\n') {
-                if (!to_parse[0] == 0) {
+                if (to_parse[0] != 0) {
                     float num = atof(to_parse);
                     row.push_back(num);
                     memset(to_parse, 0, (tp_index + 1) * sizeof(char));
@@ -220,7 +220,7 @@ std::vector<std::vector<float>> Processing::csv2matrix(std::string file_path) {
                 row.clear();
             }
             else if (c == ',') {
-                if (!to_parse[0] == 0) {
+                if (to_parse[0] != 0) {
                     float num = atof(to_parse);
                     row.push_back(num);
                     memset(to_parse, 0, (tp_index + 1) * sizeof(char));
